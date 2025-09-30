@@ -26,7 +26,7 @@ class UpdateManager(private val context: Context) {
 
     companion object {
         // 这里需要替换为您的实际更新API URL
-        private const val UPDATE_CHECK_URL = "https://api.github.com/repos/your-username/your-repo/releases/latest"
+        private const val UPDATE_CHECK_URL = "https://api.github.com/repos/ghhhch60-star/xy/releases/latest"
         private const val UPDATE_DOWNLOAD_DIR = "updates"
         private const val APK_FILE_NAME = "app-update.apk"
     }
