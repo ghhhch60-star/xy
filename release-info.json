@@ -1,0 +1,16 @@
+{
+  "tag_name": "v1.1.0",
+  "name": "IYTH App v1.1.0",
+  "body": "# IYTH App v1.1.0 - App Update Feature\n\n## New Features\n- In-app automatic update checking\n- Version comparison between local and remote\n- Real-time download progress display\n- Smart installation after download completion\n\n## How to Use\n1. Click 'Check Update' button on main screen\n2. Update dialog shows if new version available\n3. Click 'Update Now' to start download\n4. Installation starts automatically after download\n\n## Technical Improvements\n- Integrated OkHttp for network requests\n- Android DownloadManager for download management\n- FileProvider support for secure installation\n- Real-time progress monitoring and status feedback\n- Multiple mirror sources for China mainland access\n\n## System Requirements\n- Android 5.0 (API 21) or higher\n- Internet connection (for update checking)\n- About 8MB storage space\n\n## Tech Stack\n- Kotlin + Material Design 3\n- OkHttp 4.12.0 + Gson 2.10.1\n- Android DownloadManager",
+  "published_at": "2025-09-30T18:37:58Z",
+  "assets": [
+    {
+      "name": "app-release-unsigned.apk",
+      "browser_download_url": "https://github.com/ghhhch60-star/xy/releases/download/v1.1.0/app-release-unsigned.apk",
+      "size": 8388608,
+      "content_type": "application/vnd.android.package-archive"
+    }
+  ],
+  "html_url": "https://github.com/ghhhch60-star/xy/releases/tag/v1.1.0",
+  "prerelease": false
+}
