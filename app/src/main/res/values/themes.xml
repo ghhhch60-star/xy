@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.XY" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <style name="Theme.XY.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.XY.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <!-- 动漫风格主题 -->
+    <style name="Theme.XY.Anime" parent="Theme.Material3.Light.NoActionBar">
+        <!-- 主色调 - 使用动漫风格的蓝色 -->
+        <item name="colorPrimary">@color/anime_blue</item>
+        <item name="colorPrimaryVariant">@color/anime_blue_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        
+        <!-- 次要色调 - 粉色系 -->
+        <item name="colorSecondary">@color/anime_pink</item>
+        <item name="colorSecondaryVariant">@color/anime_pink_dark</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+        
+        <!-- 背景和表面 -->
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="colorSurface">@color/anime_surface</item>
+        <item name="colorOnSurface">@android:color/black</item>
+        
+        <!-- 错误色 -->
+        <item name="colorError">@color/anime_red</item>
+        <item name="colorOnError">@android:color/white</item>
+        
+        <!-- 状态栏和导航栏 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+</resources>

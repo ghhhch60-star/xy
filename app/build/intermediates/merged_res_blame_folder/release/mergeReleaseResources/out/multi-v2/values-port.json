@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.xy.root.manager.app-mergeReleaseResources-47:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Qinwy\\.gradle\\caches\\8.13\\transforms\\00e40de75bcd66ca16bfb80b6d5f505f\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

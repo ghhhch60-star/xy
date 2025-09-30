@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeDebugResources-48:\\layout\\activity_partition_files.xml",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-51:\\layout\\activity_partition_files.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeDebugResources-48:\\layout\\item_partition_anime.xml",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-51:\\layout\\item_partition_anime.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeDebugResources-48:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-51:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeDebugResources-48:\\layout\\activity_main_anime.xml",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-51:\\layout\\activity_main_anime.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeDebugResources-48:\\layout\\item_partition.xml",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-51:\\layout\\item_partition.xml"
+    },
+    {
+        "merged": "com.xy.root.manager.app-mergeDebugResources-48:/layout/activity_main_anime.xml",
+        "source": "com.xy.root.manager.app-main-51:/layout/activity_main_anime.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeDebugResources-48:\\layout\\item_file.xml",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-51:\\layout\\item_file.xml"
+    }
+]

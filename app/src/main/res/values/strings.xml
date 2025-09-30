@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XY</string>
+    <string name="root_status">Root权限状态</string>
+    <string name="request_root">请求权限</string>
+    <string name="root_granted">已获取Root权限</string>
+    <string name="root_not_granted">未获取Root权限</string>
+    <string name="refresh_partitions">刷新分区</string>
+    <string name="backup_all">备份全部</string>
+    <string name="backup">备份</string>
+    <string name="backed_up">已备份</string>
+    <string name="system_partitions">系统分区列表</string>
+    <string name="found_partitions">发现 %d 个分区</string>
+    <string name="backing_up">正在备份 %s...</string>
+    <string name="backup_success">%s 备份成功</string>
+    <string name="backup_failed">%s 备份失败</string>
+    <string name="backup_complete">备份完成</string>
+    <string name="scanning_partitions">正在扫描分区...</string>
+    <string name="storage_permission_required">需要存储权限才能使用备份功能</string>
+    <string name="root_permission_required">请先获取Root权限</string>
+    <string name="root_request_title">Root权限请求</string>
+    <string name="root_request_message">应用需要Root权限来读取和备份系统分区。请在弹出的对话框中授予Root权限。</string>
+    <string name="continue_text">继续</string>
+    <string name="cancel">取消</string>
+    <string name="grant">授权</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+    
+    <!-- Update feature strings -->
+    <string name="check_update">检查更新</string>
+    <string name="checking_update">正在检查更新...</string>
+    <string name="update_available">发现新版本</string>
+    <string name="no_update">已是最新版本</string>
+    <string name="update_download">立即更新</string>
+    <string name="update_later">稍后更新</string>
+    <string name="downloading_update">正在下载更新...</string>
+    <string name="download_complete">下载完成</string>
+    <string name="install_update">安装更新</string>
+    <string name="update_error">更新失败</string>
+    <string name="network_error">网络连接失败</string>
+    <string name="current_version">当前版本</string>
+    <string name="new_version">新版本</string>
+    <string name="update_size">更新包大小</string>
+    <string name="release_notes">更新日志</string>
+    <string name="update_dialog_title">应用更新</string>
+    <string name="force_update_message">此更新为必需更新，请立即安装</string>
+    <string name="update_message">发现新版本 %s，是否立即下载并安装？</string>
+</resources>
+

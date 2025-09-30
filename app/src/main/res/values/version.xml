@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 版本标记 - 用于强制重新编译 -->
+    <string name="app_version">2.0</string>
+    <string name="build_time">2025-09-30</string>
+    <string name="version_features">Green UI, Download folder backup, 112 partitions support</string>
+</resources>
+
