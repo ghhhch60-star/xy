@@ -47,13 +47,16 @@ drawable circle_background
 drawable ic_backup
 drawable ic_backup_all
 drawable ic_check_circle
+drawable ic_download
 drawable ic_empty_state
 drawable ic_error
 drawable ic_folder
+drawable ic_info
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_launcher_foreground_simple
 drawable ic_refresh
+drawable ic_schedule
 drawable ic_shield
 drawable ic_update
 id backupProgressBar

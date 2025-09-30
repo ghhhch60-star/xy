@@ -4,13 +4,13 @@ package com.xy.root.manager.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.xy.root.manager.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -18,13 +18,13 @@ import java.lang.String;
 
 public final class DialogUpdateBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final MaterialCardView rootView;
 
   @NonNull
-  public final Button btnCancel;
+  public final MaterialButton btnCancel;
 
   @NonNull
-  public final Button btnDownload;
+  public final MaterialButton btnDownload;
 
   @NonNull
   public final TextView tvUpdateDescription;
@@ -41,8 +41,8 @@ public final class DialogUpdateBinding implements ViewBinding {
   @NonNull
   public final TextView tvUpdateVersion;
 
-  private DialogUpdateBinding(@NonNull LinearLayout rootView, @NonNull Button btnCancel,
-      @NonNull Button btnDownload, @NonNull TextView tvUpdateDescription,
+  private DialogUpdateBinding(@NonNull MaterialCardView rootView, @NonNull MaterialButton btnCancel,
+      @NonNull MaterialButton btnDownload, @NonNull TextView tvUpdateDescription,
       @NonNull TextView tvUpdateSize, @NonNull TextView tvUpdateTime,
       @NonNull TextView tvUpdateTitle, @NonNull TextView tvUpdateVersion) {
     this.rootView = rootView;
@@ -57,7 +57,7 @@ public final class DialogUpdateBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public MaterialCardView getRoot() {
     return rootView;
   }
 
@@ -83,13 +83,13 @@ public final class DialogUpdateBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.btn_cancel;
-      Button btnCancel = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnCancel = ViewBindings.findChildViewById(rootView, id);
       if (btnCancel == null) {
         break missingId;
       }
 
       id = R.id.btn_download;
-      Button btnDownload = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnDownload = ViewBindings.findChildViewById(rootView, id);
       if (btnDownload == null) {
         break missingId;
       }
@@ -124,7 +124,7 @@ public final class DialogUpdateBinding implements ViewBinding {
         break missingId;
       }
 
-      return new DialogUpdateBinding((LinearLayout) rootView, btnCancel, btnDownload,
+      return new DialogUpdateBinding((MaterialCardView) rootView, btnCancel, btnDownload,
           tvUpdateDescription, tvUpdateSize, tvUpdateTime, tvUpdateTitle, tvUpdateVersion);
     }
     String missingId = rootView.getResources().getResourceName(id);

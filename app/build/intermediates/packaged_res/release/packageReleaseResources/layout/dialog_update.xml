@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="8dp"
+    app:strokeWidth="0dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="?attr/colorSurface">
 
     <!-- 标题区域 -->
     <LinearLayout
@@ -15,32 +23,57 @@
         android:layout_marginBottom="16dp">
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_update"
-            android:layout_marginEnd="12dp"
-            android:tint="?attr/colorPrimary" />
+            android:layout_marginEnd="16dp"
+            android:tint="?attr/colorPrimary"
+            android:background="@drawable/chip_background"
+            android:padding="8dp" />
 
-        <TextView
-            android:id="@+id/tv_update_title"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="发现新版本"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_update_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎉 发现新版本"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="建议立即更新以获得最佳体验"
+                android:textSize="12sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <!-- 版本信息区域 -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutline"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/chip_background"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_update_version"
@@ -70,15 +103,32 @@
 
     </LinearLayout>
 
+    </com.google.android.material.card.MaterialCardView>
+
     <!-- 更新说明 -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="更新内容:"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_marginBottom="8dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_info"
+            android:layout_marginEnd="8dp"
+            android:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📋 更新内容"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -103,27 +153,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end">
+        android:gravity="end"
+        android:layout_marginTop="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="稍后提醒"
             android:textColor="?attr/colorOnSurfaceVariant"
-            android:background="?attr/selectableItemBackground"
-            android:layout_marginEnd="16dp"
-            style="@style/Widget.Material3.Button.TextButton" />
+            android:layout_marginEnd="12dp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_schedule"
+            app:iconGravity="textStart" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_download"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="立即更新"
             android:textColor="?attr/colorOnPrimary"
-            android:backgroundTint="?attr/colorPrimary"
-            style="@style/Widget.Material3.Button" />
+            app:backgroundTint="?attr/colorPrimary"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_download"
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 
 </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

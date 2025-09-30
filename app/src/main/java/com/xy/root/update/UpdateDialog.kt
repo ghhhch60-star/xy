@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xy.root.manager.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,7 +80,7 @@ class UpdateDialog(private val context: Context) {
         }
         
         // 创建并显示对话框
-        dialog = AlertDialog.Builder(context)
+        dialog = MaterialAlertDialogBuilder(context)
             .setView(view)
             .setCancelable(true)
             .create()
@@ -105,7 +106,7 @@ class UpdateDialog(private val context: Context) {
             onCancelClick()
         }
         
-        progressDialog = AlertDialog.Builder(context)
+        progressDialog = MaterialAlertDialogBuilder(context)
             .setView(view)
             .setCancelable(false)
             .create()
@@ -119,9 +120,10 @@ class UpdateDialog(private val context: Context) {
      * 显示错误对话框
      */
     fun showErrorDialog(message: String, onOkClick: () -> Unit = {}) {
-        AlertDialog.Builder(context)
-            .setTitle("更新失败")
+        MaterialAlertDialogBuilder(context)
+            .setTitle("❌ 更新失败")
             .setMessage(message)
+            .setIcon(R.drawable.ic_error)
             .setPositiveButton("确定") { dialog, _ ->
                 dialog.dismiss()
                 onOkClick()
@@ -134,9 +136,10 @@ class UpdateDialog(private val context: Context) {
      * 显示无更新对话框
      */
     fun showNoUpdateDialog(currentVersion: String) {
-        AlertDialog.Builder(context)
-            .setTitle("检查更新")
-            .setMessage("当前已是最新版本 $currentVersion")
+        MaterialAlertDialogBuilder(context)
+            .setTitle("✅ 检查更新")
+            .setMessage("当前已是最新版本 $currentVersion\n\n您的应用已经是最新版本，无需更新。")
+            .setIcon(R.drawable.ic_check_circle)
             .setPositiveButton("确定") { dialog, _ -> dialog.dismiss() }
             .setCancelable(true)
             .show()
