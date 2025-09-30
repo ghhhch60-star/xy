@@ -26,8 +26,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.xy.root.manager.adapter.PartitionAdapterAnime
 import com.xy.root.manager.model.Partition
-import com.xy.root.manager.model.UpdateInfo
-import com.xy.root.manager.utils.UpdateManager
+import com.xy.root.update.UpdateManager
+import com.xy.root.update.UpdateDialog
+import com.xy.root.update.UpdateStatus
 import com.xy.root.manager.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var partitionAdapter: PartitionAdapterAnime
     private lateinit var updateManager: UpdateManager
+    private lateinit var updateDialog: UpdateDialog
     
     private val STORAGE_PERMISSION_CODE = 100
     
@@ -80,9 +82,11 @@ class MainActivity : AppCompatActivity() {
         
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         updateManager = UpdateManager(this)
+        updateDialog = UpdateDialog(this)
         
         setupUI()
         observeViewModel()
+        observeUpdateManager()
         checkPermissions()
         
         // 添加进入动画
@@ -527,138 +531,93 @@ class MainActivity : AppCompatActivity() {
     // ========== 更新功能相关方法 ==========
     
     /**
+     * 观察更新管理器状态
+     */
+    private fun observeUpdateManager() {
+        updateManager.updateStatus.observe(this) { status ->
+            when (status) {
+                is UpdateStatus.Checking -> {
+                    btnCheckUpdate.isEnabled = false
+                    btnCheckUpdate.text = "检查中..."
+                }
+                is UpdateStatus.NoUpdate -> {
+                    btnCheckUpdate.isEnabled = true
+                    btnCheckUpdate.text = "检查更新"
+                    try {
+                        val currentVersion = this.packageManager.getPackageInfo(packageName, 0).versionName
+                        updateDialog.showNoUpdateDialog(currentVersion ?: "1.0")
+                    } catch (e: Exception) {
+                        updateDialog.showNoUpdateDialog("1.0")
+                    }
+                }
+                is UpdateStatus.UpdateAvailable -> {
+                    btnCheckUpdate.isEnabled = true
+                    btnCheckUpdate.text = "检查更新"
+                    updateDialog.showUpdateDialog(
+                        updateInfo = status.updateInfo,
+                        onDownloadClick = {
+                            updateManager.downloadUpdate(status.updateInfo)
+                        }
+                    )
+                }
+                is UpdateStatus.Downloading -> {
+                    showDownloadProgressDialog()
+                }
+                is UpdateStatus.DownloadCompleted -> {
+                    hideDownloadProgressDialog()
+                    showMessage("下载完成，正在准备安装...")
+                }
+                is UpdateStatus.ReadyToInstall -> {
+                    hideDownloadProgressDialog()
+                    showMessage("安装程序已启动，请按照提示完成安装")
+                }
+                is UpdateStatus.Error -> {
+                    btnCheckUpdate.isEnabled = true
+                    btnCheckUpdate.text = "检查更新"
+                    hideDownloadProgressDialog()
+                    updateDialog.showErrorDialog(status.message)
+                }
+            }
+        }
+    }
+    
+    private var progressDialogController: UpdateDialog.ProgressDialogController? = null
+    
+    /**
+     * 显示下载进度对话框
+     */
+    private fun showDownloadProgressDialog() {
+        progressDialogController = updateDialog.showDownloadProgressDialog {
+            // 取消下载
+            updateManager.cleanup()
+            showMessage("下载已取消")
+        }
+        
+        // 观察下载进度
+        updateManager.downloadProgress.observe(this) { progress ->
+            progressDialogController?.updateProgress(progress)
+        }
+    }
+    
+    /**
+     * 隐藏下载进度对话框
+     */
+    private fun hideDownloadProgressDialog() {
+        progressDialogController = null
+    }
+    
+    /**
      * 检查应用更新
      */
     private fun checkForUpdate() {
-        // 禁用按钮防止重复点击
-        btnCheckUpdate.isEnabled = false
-        btnCheckUpdate.text = getString(R.string.checking_update)
-        
         CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val updateResponse = withContext(Dispatchers.IO) {
-                    updateManager.checkForUpdate()
-                }
-                
-                if (updateResponse.hasUpdate && updateResponse.updateInfo != null) {
-                    showUpdateDialog(updateResponse.updateInfo)
-                } else {
-                    showMessage(getString(R.string.no_update))
-                }
-                
-            } catch (e: Exception) {
-                e.printStackTrace()
-                showMessage(getString(R.string.network_error))
-            } finally {
-                // 恢复按钮状态
-                btnCheckUpdate.isEnabled = true
-                btnCheckUpdate.text = getString(R.string.check_update)
-            }
+            updateManager.checkForUpdate()
         }
     }
     
-    /**
-     * 显示更新对话框
-     */
-    private fun showUpdateDialog(updateInfo: UpdateInfo) {
-        val currentVersion = updateManager.getCurrentVersionInfo()
-        val newVersion = "v${updateInfo.versionName} (${updateInfo.versionCode})"
-        val fileSize = updateManager.formatFileSize(updateInfo.fileSize)
-        
-        val message = StringBuilder().apply {
-            append("发现新版本可供下载\n\n")
-            append("${getString(R.string.current_version)}: $currentVersion\n")
-            append("${getString(R.string.new_version)}: $newVersion\n")
-            append("${getString(R.string.update_size)}: $fileSize\n\n")
-            
-            if (updateInfo.releaseNotes.isNotBlank()) {
-                append("${getString(R.string.release_notes)}:\n")
-                append(updateInfo.releaseNotes.take(200)) // 限制显示长度
-                if (updateInfo.releaseNotes.length > 200) {
-                    append("...")
-                }
-            }
-        }.toString()
-        
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.update_dialog_title))
-            .setMessage(message)
-            .setIcon(R.drawable.ic_update)
-            .setPositiveButton(getString(R.string.update_download)) { _, _ ->
-                downloadUpdate(updateInfo)
-            }
-            .setNegativeButton(getString(R.string.update_later)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setCancelable(!updateInfo.isForced) // 强制更新不允许取消
-            .show()
-    }
-    
-    /**
-     * 下载更新
-     */
-    private fun downloadUpdate(updateInfo: UpdateInfo) {
-        // 显示下载进度对话框
-        val progressDialog = MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.downloading_update))
-            .setMessage("正在下载 v${updateInfo.versionName}...")
-            .setIcon(R.drawable.ic_update)
-            .setCancelable(false)
-            .create()
-        
-        progressDialog.show()
-        
-        updateManager.downloadUpdate(
-            updateInfo = updateInfo,
-            onProgress = { progress ->
-                // 可以在这里更新进度，如果需要的话
-                runOnUiThread {
-                    progressDialog.setMessage("正在下载 v${updateInfo.versionName}... $progress%")
-                }
-            },
-            onComplete = { success, error ->
-                runOnUiThread {
-                    progressDialog.dismiss()
-                    
-                    if (success) {
-                        showInstallDialog()
-                    } else {
-                        showMessage("${getString(R.string.update_error)}: ${error ?: "未知错误"}")
-                    }
-                }
-            }
-        )
-    }
-    
-    /**
-     * 显示安装对话框
-     */
-    private fun showInstallDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.download_complete))
-            .setMessage("更新包下载完成，是否立即安装？")
-            .setIcon(R.drawable.ic_check_circle)
-            .setPositiveButton(getString(R.string.install_update)) { _, _ ->
-                installUpdate()
-            }
-            .setNegativeButton(getString(R.string.update_later)) { dialog, _ ->
-                dialog.dismiss()
-                showMessage("更新包已保存，您可以稍后手动安装")
-            }
-            .setCancelable(false)
-            .show()
-    }
-    
-    /**
-     * 安装更新
-     */
-    private fun installUpdate() {
-        try {
-            updateManager.installApk()
-            showMessage("正在启动安装程序...")
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showMessage("安装失败: ${e.message}")
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        updateManager.cleanup()
+        updateDialog.dismissAll()
     }
 }

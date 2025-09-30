@@ -1,19 +1,11 @@
 [
     {
-        "merged": "com.xy.root.manager.app-release-49:/drawable_ic_update.xml.flat",
-        "source": "com.xy.root.manager.app-main-50:/drawable/ic_update.xml"
-    },
-    {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\drawable_ic_error.xml.flat",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\drawable\\ic_error.xml"
     },
     {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\mipmap-anydpi-v26\\ic_launcher.xml"
-    },
-    {
-        "merged": "com.xy.root.manager.app-release-49:/xml_file_paths.xml.flat",
-        "source": "com.xy.root.manager.app-main-50:/xml/file_paths.xml"
     },
     {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\drawable_anime_chip_background.xml.flat",
@@ -24,12 +16,12 @@
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\drawable-v24\\ic_launcher_foreground_simple.xml"
     },
     {
-        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\layout_activity_partition_files.xml.flat",
-        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\activity_partition_files.xml"
-    },
-    {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\xml_backup_rules.xml.flat",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\layout_activity_partition_files.xml.flat",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\activity_partition_files.xml"
     },
     {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\drawable_ic_backup_all.xml.flat",
@@ -56,8 +48,8 @@
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.xy.root.manager.app-release-49:/layout_activity_main_anime.xml.flat",
-        "source": "com.xy.root.manager.app-main-50:/layout/activity_main_anime.xml"
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\drawable_ic_update.xml.flat",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\drawable\\ic_update.xml"
     },
     {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\layout_item_file.xml.flat",
@@ -88,6 +80,10 @@
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
+        "merged": "com.xy.root.manager.app-release-49:/layout_dialog_download_progress.xml.flat",
+        "source": "com.xy.root.manager.app-main-50:/layout/dialog_download_progress.xml"
+    },
+    {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\drawable_ic_launcher_background.xml.flat",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\drawable\\ic_launcher_background.xml"
     },
@@ -108,7 +104,15 @@
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\activity_main.xml"
     },
     {
+        "merged": "com.xy.root.manager.app-release-49:/layout_dialog_update.xml.flat",
+        "source": "com.xy.root.manager.app-main-50:/layout/dialog_update.xml"
+    },
+    {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\layout_item_partition_anime.xml.flat",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\item_partition_anime.xml"
+    },
+    {
+        "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-release-49:\\xml_file_paths.xml.flat",
+        "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\xml\\file_paths.xml"
     }
 ]

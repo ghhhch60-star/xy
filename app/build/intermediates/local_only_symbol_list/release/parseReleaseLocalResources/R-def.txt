@@ -66,6 +66,9 @@ id btnCheckUpdate
 id btnRefreshPartitions
 id btnRequestRoot
 id btnSelectAll
+id btn_cancel
+id btn_cancel_download
+id btn_download
 id buttonBackup
 id buttonRefreshSelection
 id buttonSelectAll
@@ -79,6 +82,7 @@ id imageViewStatus
 id layoutFileActions
 id progressCard
 id progressIndicator
+id progress_bar
 id recyclerViewFiles
 id recyclerViewPartitions
 id referenceStatusCard
@@ -102,9 +106,18 @@ id textViewReferenceStatus
 id textViewRootStatus
 id textViewRootType
 id toolbar
+id tv_progress
+id tv_status
+id tv_update_description
+id tv_update_size
+id tv_update_time
+id tv_update_title
+id tv_update_version
 layout activity_main
 layout activity_main_anime
 layout activity_partition_files
+layout dialog_download_progress
+layout dialog_update
 layout item_file
 layout item_partition
 layout item_partition_anime

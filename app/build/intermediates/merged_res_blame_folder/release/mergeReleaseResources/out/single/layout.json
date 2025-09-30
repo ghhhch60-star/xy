@@ -1,5 +1,9 @@
 [
     {
+        "merged": "com.xy.root.manager.app-mergeReleaseResources-48:/layout/dialog_download_progress.xml",
+        "source": "com.xy.root.manager.app-main-50:/layout/dialog_download_progress.xml"
+    },
+    {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeReleaseResources-48:\\layout\\activity_main_anime.xml",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\activity_main_anime.xml"
     },
@@ -8,12 +12,12 @@
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\item_partition.xml"
     },
     {
-        "merged": "com.xy.root.manager.app-mergeReleaseResources-48:/layout/activity_main_anime.xml",
-        "source": "com.xy.root.manager.app-main-50:/layout/activity_main_anime.xml"
-    },
-    {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeReleaseResources-48:\\layout\\activity_partition_files.xml",
         "source": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-main-50:\\layout\\activity_partition_files.xml"
+    },
+    {
+        "merged": "com.xy.root.manager.app-mergeReleaseResources-48:/layout/dialog_update.xml",
+        "source": "com.xy.root.manager.app-main-50:/layout/dialog_update.xml"
     },
     {
         "merged": "C:\\Users\\Qinwy\\.gradle\\daemon\\8.13\\com.xy.root.manager.app-mergeReleaseResources-48:\\layout\\activity_main.xml",

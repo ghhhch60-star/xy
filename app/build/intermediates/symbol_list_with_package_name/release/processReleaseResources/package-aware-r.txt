@@ -3286,6 +3286,9 @@ id btnCheckUpdate
 id btnRefreshPartitions
 id btnRequestRoot
 id btnSelectAll
+id btn_cancel
+id btn_cancel_download
+id btn_download
 id buttonBackup
 id buttonPanel
 id buttonRefreshSelection
@@ -3558,6 +3561,7 @@ id postLayout
 id pressed
 id progressCard
 id progressIndicator
+id progress_bar
 id progress_circular
 id progress_horizontal
 id radio
@@ -3704,6 +3708,13 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tv_progress
+id tv_status
+id tv_update_description
+id tv_update_size
+id tv_update_time
+id tv_update_title
+id tv_update_version
 id unchecked
 id uniform
 id unlabeled
@@ -3861,6 +3872,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_download_progress
+layout dialog_update
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_file

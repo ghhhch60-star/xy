@@ -12,8 +12,8 @@ import com.google.gson.Gson
 import com.xy.root.manager.BuildConfig
 import com.xy.root.manager.model.UpdateInfo
 import com.xy.root.manager.model.UpdateResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.xy.root.update.UpdateSourceManager
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
@@ -25,84 +25,100 @@ import kotlin.math.pow
 class UpdateManager(private val context: Context) {
 
     companion object {
-        // 这里需要替换为您的实际更新API URL
-        private const val UPDATE_CHECK_URL = "https://api.github.com/repos/ghhhch60-star/xy/releases/latest"
         private const val UPDATE_DOWNLOAD_DIR = "updates"
-        private const val APK_FILE_NAME = "app-update.apk"
+        private const val APK_FILE_NAME = "iyth-app-update.apk"
     }
 
     private val client = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
     private val gson = Gson()
+    private val sourceManager = UpdateSourceManager(context)
     private var downloadId: Long = -1
     private var onDownloadComplete: ((Boolean, String?) -> Unit)? = null
 
     /**
-     * 检查是否有新版本可用
+     * 检查是否有新版本可用 - 使用智能源管理器
      */
     suspend fun checkForUpdate(): UpdateResponse = withContext(Dispatchers.IO) {
         try {
-            val request = Request.Builder()
-                .url(UPDATE_CHECK_URL)
-                .build()
-
-            val response = client.newCall(request).execute()
+            val updateSources = sourceManager.getBestUpdateSources()
             
-            if (!response.isSuccessful) {
-                return@withContext UpdateResponse(false, null)
+            for (updateUrl in updateSources) {
+                try {
+                    val request = Request.Builder()
+                        .url(updateUrl)
+                        .addHeader("Accept", "application/vnd.github+json")
+                        .addHeader("User-Agent", "IYTH-App-Updater/1.0")
+                        .build()
+
+                    val response = client.newCall(request).execute()
+                    
+                    if (!response.isSuccessful) {
+                        continue // 尝试下一个源
+                    }
+
+                    val jsonResponse = response.body?.string()
+                    if (jsonResponse.isNullOrEmpty()) {
+                        continue // 尝试下一个源
+                    }
+
+                    // 解析GitHub API响应
+                    val releaseInfo = gson.fromJson(jsonResponse, Map::class.java)
+                    val tagName = releaseInfo["tag_name"] as? String ?: continue
+                    val name = releaseInfo["name"] as? String ?: tagName
+                    val body = releaseInfo["body"] as? String ?: ""
+                    val assets = releaseInfo["assets"] as? List<Map<String, Any>> ?: emptyList()
+
+                    // 查找APK文件
+                    val apkAsset = assets.find { asset ->
+                        val assetName = asset["name"] as? String ?: ""
+                        assetName.endsWith(".apk", ignoreCase = true)
+                    }
+
+                    if (apkAsset == null) {
+                        continue // 尝试下一个源
+                    }
+
+                    val downloadUrl = apkAsset["browser_download_url"] as? String ?: continue
+                    val fileSize = (apkAsset["size"] as? Number)?.toLong() ?: 0L
+
+                    // 解析版本号（假设格式为 v1.6 或 1.6）
+                    val versionName = tagName.removePrefix("v")
+                    val versionCode = parseVersionCode(versionName)
+
+                    // 检查是否为新版本
+                    val currentVersionCode = BuildConfig.VERSION_CODE
+                    val hasUpdate = versionCode > currentVersionCode
+
+                    // 记录成功的源
+                    sourceManager.recordSuccessfulSource(updateUrl)
+
+                    if (hasUpdate) {
+                        val updateInfo = UpdateInfo(
+                            versionName = versionName,
+                            versionCode = versionCode,
+                            downloadUrl = downloadUrl,
+                            fileSize = fileSize,
+                            releaseNotes = body,
+                            isForced = false // 可以根据需要设置强制更新逻辑
+                        )
+                        return@withContext UpdateResponse(true, updateInfo)
+                    } else {
+                        return@withContext UpdateResponse(false, null)
+                    }
+
+                } catch (e: Exception) {
+                    // 继续尝试下一个源
+                    continue
+                }
             }
-
-            val jsonResponse = response.body?.string()
-            if (jsonResponse.isNullOrEmpty()) {
-                return@withContext UpdateResponse(false, null)
-            }
-
-            // 解析GitHub API响应
-            val releaseInfo = gson.fromJson(jsonResponse, Map::class.java)
-            val tagName = releaseInfo["tag_name"] as? String ?: return@withContext UpdateResponse(false, null)
-            val name = releaseInfo["name"] as? String ?: tagName
-            val body = releaseInfo["body"] as? String ?: ""
-            val assets = releaseInfo["assets"] as? List<Map<String, Any>> ?: emptyList()
-
-            // 查找APK文件
-            val apkAsset = assets.find { asset ->
-                val assetName = asset["name"] as? String ?: ""
-                assetName.endsWith(".apk", ignoreCase = true)
-            }
-
-            if (apkAsset == null) {
-                return@withContext UpdateResponse(false, null)
-            }
-
-            val downloadUrl = apkAsset["browser_download_url"] as? String
-                ?: return@withContext UpdateResponse(false, null)
-            val fileSize = (apkAsset["size"] as? Number)?.toLong() ?: 0L
-
-            // 解析版本号（假设格式为 v1.6 或 1.6）
-            val versionName = tagName.removePrefix("v")
-            val versionCode = parseVersionCode(versionName)
-
-            // 检查是否为新版本
-            val currentVersionCode = BuildConfig.VERSION_CODE
-            val hasUpdate = versionCode > currentVersionCode
-
-            if (hasUpdate) {
-                val updateInfo = UpdateInfo(
-                    versionName = versionName,
-                    versionCode = versionCode,
-                    downloadUrl = downloadUrl,
-                    fileSize = fileSize,
-                    releaseNotes = body,
-                    isForced = false // 可以根据需要设置强制更新逻辑
-                )
-                UpdateResponse(true, updateInfo)
-            } else {
-                UpdateResponse(false, null)
-            }
+            
+            // 所有源都失败了
+            UpdateResponse(false, null)
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -111,7 +127,7 @@ class UpdateManager(private val context: Context) {
     }
 
     /**
-     * 下载APK文件
+     * 下载APK文件 - 使用镜像源优化
      */
     fun downloadUpdate(
         updateInfo: UpdateInfo,
@@ -120,6 +136,30 @@ class UpdateManager(private val context: Context) {
     ) {
         this.onDownloadComplete = onComplete
 
+        // 在协程中获取最佳下载链接
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val optimizedDownloadUrl = sourceManager.getBestDownloadMirror(updateInfo.downloadUrl)
+                
+                withContext(Dispatchers.Main) {
+                    startDownloadWithUrl(updateInfo, optimizedDownloadUrl, onComplete)
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onComplete(false, "获取下载链接失败: ${e.message}")
+                }
+            }
+        }
+    }
+    
+    /**
+     * 使用指定URL开始下载
+     */
+    private fun startDownloadWithUrl(
+        updateInfo: UpdateInfo,
+        downloadUrl: String,
+        onComplete: (Boolean, String?) -> Unit
+    ) {
         try {
             val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             
@@ -136,14 +176,18 @@ class UpdateManager(private val context: Context) {
                 destinationFile.delete()
             }
 
-            val request = DownloadManager.Request(Uri.parse(updateInfo.downloadUrl))
-                .setTitle("XY应用更新")
+            val request = DownloadManager.Request(Uri.parse(downloadUrl))
+                .setTitle("IYTH应用更新")
                 .setDescription("正在下载版本 ${updateInfo.versionName}")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationUri(Uri.fromFile(destinationFile))
                 .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                .addRequestHeader("User-Agent", "IYTH-App-Updater/1.0")
 
             downloadId = downloadManager.enqueue(request)
+            
+            // 记录成功的镜像
+            sourceManager.recordSuccessfulMirror(downloadUrl)
 
             // 注册下载完成监听器
             registerDownloadReceiver()
